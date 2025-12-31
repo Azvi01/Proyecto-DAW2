@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: eCommerce
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eCommerce
+      MYSQL_USER: prueba
+      MYSQL_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./bbdd:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+
+  php:
+    build:
+      context: .
+      dockerfile: ./miuaguauTEch/Dockerfile
+    container_name: miuaguautech_php
+    restart: always
+    volumes:
+      - ./miuaguauTEch:/var/www/html
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: miuaguautech_phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: prueba
+      PMA_PASSWORD: root
+    depends_on:
+      - db
+
+volumes:
+  db_data:
