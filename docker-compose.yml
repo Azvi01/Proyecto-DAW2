@@ -19,11 +19,11 @@ services:
   php:
     build:
       context: .
-      dockerfile: ./miuaguauTEch/Dockerfile
+      dockerfile: ./MiauGuauTech/Dockerfile
     container_name: miuaguautech_php
     restart: always
     volumes:
-      - ./miuaguauTEch:/var/www/html
+      - ./MiauGuauTech:/var/www/html
     ports:
       - "8000:80"
     depends_on:
