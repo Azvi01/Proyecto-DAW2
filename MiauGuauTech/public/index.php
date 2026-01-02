@@ -6,13 +6,25 @@
     <title>MiauGuauTech</title>
 </head>
 <body>
-    <h1>MiauGuau-Tech</h1>
 
-    <?php
-        $password = "1234";
-        $hash = password_hash($password, PASSWORD_DEFAULT);
+<h1>
+  MiauGuauTech 🐱🐶
+</h1>
 
-        echo $hash;
-    ?>
+        <?php
+    $conexion = new mysqli("db", "prueba", "root", "eCommerce");
+    $conexion->set_charset("utf8");
+
+    $resultado = $conexion->query("SELECT * FROM products");
+    
+    if ($resultado && $resultado->num_rows > 0) :
+        while ($fila = $resultado->fetch_assoc()) :
+?>
+
+<img src="<?= $fila['img'] ?>?>"  class="">
+<?php
+    endwhile;
+    endif;
+?>
 </body>
 </html>
