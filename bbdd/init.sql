@@ -101,16 +101,54 @@ CREATE TABLE order_items (
 
 INSERT INTO category (name, description) VALUES
 ('Smartphones', 'Telefonos moviles y accesorios'),
-('Ordenadores', 'Portatiles y sobremesa'),
-('Perifericos', 'Teclados, ratones y monitores'),
-('Audio', 'Auriculares y altavoces');
+('Portatill', 'Un ordenaor mas pequeño, un poco menos potente y portable'),
+('Sobremesa', 'Ordenador que esta en la mesa 🤙'),
+('Consolas', 'PlayStation, Xbox, Nintendo.'),
+('Electrodomesticos', 'Frigorificos, Cafeteras, Microondas'),
+('Perifericos', 'Complementos para dispositivos electronicos');
 
 INSERT INTO products (name, description, base_price, img, category_id, fabricante, active, stock) VALUES
-('iPhone 15', 'Smartphone Apple 128GB', 999.99, 'iphone15.jpg', 1, 'Apple', 1, 40),
-('Samsung Galaxy S24', 'Smartphone Android 256GB', 899.99, 's24.jpg', 1, 'Samsung', 1, 60),
-('MacBook Pro M3', 'Portatil Apple para desarrollo', 1999.00, 'mbp_m3.jpg', 2, 'Apple', 1, 15),
-('Teclado Mecanico RGB', 'Teclado gaming mecanico', 129.99, 'keyboard.jpg', 3, 'Logitech', 1, 100),
-('Auriculares Sony WH-1000XM5', 'Auriculares con cancelacion de ruido', 349.99, 'sony.jpg', 4, 'Sony', 1, 35);
+-- Smartphone (1)
+('iPhone 14', 'Smartphone Apple con pantalla OLED y Face ID', 899.99, './img/products/1.jpg', 1, 'Apple', 1, 15),
+('Samsung Galaxy S23', 'Movil Android de alta gama con gran camara', 849.99, './img/products/2.jpg', 1, 'Samsung', 1, 20),
+('Xiaomi Redmi Note 12', 'Smartphone economico con buena autonomia', 249.99, './img/products/3.jpg', 1, 'Xiaomi', 1, 35),
+('Google Pixel 7', 'Movil con Android puro y excelente fotografia', 699.99, './img/products/4.jpg', 1, 'Google', 1, 10),
+('OnePlus Nord 3', 'Equilibrio perfecto entre precio y potencia', 499.99, './img/products/5.jpg', 1, 'OnePlus', 1, 18),
+
+-- Portátiles (2)
+('MacBook Air M2', 'Portatil ligero con chip Apple M2', 1299.99, './img/products/6.jpg', 2, 'Apple', 1, 8),
+('Dell XPS 13', 'Portatil premium con pantalla InfinityEdge', 1199.99, './img/products/7.jpg', 2, 'Dell', 1, 6),
+('HP Pavilion 15', 'Portatil versatil para estudio y trabajo', 699.99, './img/products/8.jpg', 2, 'HP', 1, 12),
+('Lenovo ThinkPad X1', 'Portatil profesional resistente y potente', 1399.99, './img/products/9.jpg', 2, 'Lenovo', 1, 5),
+('Asus VivoBook 14', 'Portatil compacto y economico', 549.99, './img/products/10.jpg', 2, 'Asus', 1, 14),
+
+-- Sobremesa (3)
+('PC Gaming RTX 4060', 'Ordenador gaming de alto rendimiento', 1499.99, './img/products/11.jpg', 3, 'MSI', 1, 7),
+('iMac 24"', 'Todo en uno de Apple con pantalla 4.5K', 1599.99, './img/products/12.jpg', 3, 'Apple', 1, 4),
+('PC Oficina i5', 'Equipo silencioso para trabajo diario', 699.99, './img/products/13.jpg', 3, 'Acer', 1, 10),
+('PC Ryzen 7', 'Ordenador potente para edicion y multitarea', 999.99, './img/products/14.jpg', 3, 'Custom', 1, 6),
+('Mini PC Intel NUC', 'PC compacto y eficiente', 499.99, './img/products/15.jpg', 3, 'Intel', 1, 9),
+
+-- Consolas (4)
+('PlayStation 5', 'Consola de nueva generacion de Sony', 549.99, './img/products/16.jpg', 4, 'Sony', 1, 11),
+('Xbox Series X', 'Consola potente de Microsoft', 549.99, './img/products/17.jpg', 4, 'Microsoft', 1, 9),
+('Nintendo Switch', 'Consola hibrida portatil y sobremesa', 329.99, './img/products/18.jpg', 4, 'Nintendo', 1, 20),
+('PlayStation 4 Slim', 'Consola clasica con gran catalogo', 299.99, './img/products/19.jpg', 4, 'Sony', 1, 7),
+('Xbox Series S', 'Consola digital compacta', 299.99, './img/products/20.jpg', 4, 'Microsoft', 1, 13),
+
+-- Electrodomésticos (5)
+('Frigorifico LG', 'Nevera de gran capacidad y bajo consumo', 899.99, './img/products/21.jpg', 5, 'LG', 1, 4),
+('Cafetera Nespresso', 'Cafetera de capsulas rapida y compacta', 149.99, './img/products/22.jpg', 5, 'Nespresso', 1, 22),
+('Microondas Samsung', 'Microondas con grill integrado', 129.99, './img/products/23.jpg', 5, 'Samsung', 1, 16),
+('Lavadora Bosch', 'Lavadora eficiente y silenciosa', 599.99, './img/products/24.jpg', 5, 'Bosch', 1, 5),
+('Aspiradora Dyson', 'Aspiradora sin cable de alta potencia', 499.99, './img/products/25.jpg', 5, 'Dyson', 1, 8),
+
+-- Periféricos (6)
+('Teclado Mecanico RGB', 'Teclado gaming con switches mecanicos', 99.99, './img/products/26.jpg', 6, 'Corsair', 1, 25),
+('Raton Gaming', 'Raton ergonomico de alta precision', 59.99, './img/products/27.jpg', 6, 'Logitech', 1, 30),
+('Monitor 27" 144Hz', 'Monitor gaming fluido y sin tearing', 279.99, './img/products/28.jpg', 6, 'AOC', 1, 10),
+('Auriculares Bluetooth', 'Auriculares inalambricos con cancelacion', 199.99, './img/products/29.jpg', 6, 'Sony', 1, 18),
+('Webcam Full HD', 'Camara ideal para streaming y videollamadas', 79.99, './img/products/30.jpg', 6, 'Logitech', 1, 14);
 
 INSERT INTO attributes (name, unit) VALUES
 ('Color', NULL),
