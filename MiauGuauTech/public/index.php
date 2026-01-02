@@ -7,5 +7,12 @@
 </head>
 <body>
     <h1>MiauGuau-Tech</h1>
+
+    <?php
+        $password = "1234";
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+
+        echo $hash;
+    ?>
 </body>
 </html>
