@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php
+    require_once("../app/libs/View.php");
+    require_once("../app/libs/Session.php");
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiauGuauTech</title>
-</head>
-
-<body>
-    <?php
-
-    $nombre_controlador = $_GET['controller'] ?? 'Home';
+    Session::init();
+    
+    $nombre_controlador = $_GET['controller'] ?? 'Products';
     $accion = $_GET['action'] ?? 'index';
 
     $nombre_clase = ucfirst($nombre_controlador) . 'Controller';
@@ -30,7 +24,4 @@
     } else {
         echo "Error: El controlador no existe.";
     }
-    ?>
-</body>
-
-</html>
+?>
