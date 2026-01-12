@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MiauGuauTech</title>
 
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-    <header class="cabezera">
+<body class="bg-red-300">
+    <header class="bg-red-400 text-2xl">
         <div class="ladoIzquierdo">
             <div class="logo">
                 <img src="./img/logo-sin-fondo.png" alt="Logo" class="logoImg">
             </div>
             <nav>
-                <a href="#">Inicio</a>
-                <a href="">Ofertas</a>
+                <a href="#" class="text-green-400">Inicio</a>
+                <a href="" class="font-bold text-red-700">Ofertas</a>
             </nav>
         </div>
 
