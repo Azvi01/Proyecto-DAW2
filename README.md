@@ -1,5 +1,5 @@
 # Proyecto-DAW2
-Proyecto del curso de DAW2 
+Proyecto del curso de DAW2 de un eCommerce.
 
 
 Para ejecutar el proyeto poner en la terminal:
