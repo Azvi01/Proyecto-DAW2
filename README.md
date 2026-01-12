@@ -2,4 +2,7 @@
 Proyecto del curso de DAW2 
 
 
-Para ejecutar el proyeto poner en la terminal docker compose up -d
+Para ejecutar el proyeto poner en la terminal:
+    npm install
+    npm run dev
+    docker compose up -d
