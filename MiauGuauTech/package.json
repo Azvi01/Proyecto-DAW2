@@ -1,11 +1,10 @@
 {
   "dependencies": {
     "@tailwindcss/cli": "^4.1.18",
+    "daisyui": "^5.5.14",
     "tailwindcss": "^4.1.18"
   },
   "scripts": {
-  "dev": "tailwindcss -i ./public/css/input.css -o ./public/css/style.css --watch",
-  "build": "tailwindcss -i ./public/css/input.css -o ./public/css/style.css --minify"
-}
-
+    "postinstall": "tailwindcss -i ./public/css/input.css -o ./public/css/style.css --watch"
+  }
 }

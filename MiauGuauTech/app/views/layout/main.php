@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,38 +8,56 @@
 
     <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="bg-red-300">
-    <header class="bg-red-400 text-2xl">
-        <div class="ladoIzquierdo">
-            <div class="logo">
-                <img src="./img/logo-sin-fondo.png" alt="Logo" class="logoImg">
-            </div>
-            <nav>
-                <a href="#" class="text-green-400">Inicio</a>
-                <a href="" class="font-bold text-red-700">Ofertas</a>
-            </nav>
-        </div>
 
-        <div class="ladoDerecho">
-            <div class="barraBusqueda">
-                <i class="bi bi-search"></i>
-                <input type="text" placeholder="Buscar...">
+<body class="bg-blue-300">
+    <header>
+        <div class="navbar bg-base-100 shadow-sm">
+            <div class="navbar-start">
+                <div class="drawer">
+                    <input id="my-drawer-1" type="checkbox" class="drawer-toggle" />
+                    <div class="drawer-content">
+
+                        <label for="my-drawer-1" class="btn drawer-button">
+                            <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                                </svg>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="drawer-side">
+                        <label for="my-drawer-1" aria-label="close sidebar" class="drawer-overlay"></label>
+                        <ul class="menu bg-base-200 min-h-full w-80 p-4">
+                            <!-- Sidebar content here -->
+                            <li><a>Sidebar Item 1</a></li>
+                            <li><a>Sidebar Item 2</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="accesibilidad">
-                <p>🛒</p>
-                <label for="menuPerfil" class="perfil">
-                    U
-                </label>
-                <input type="checkbox" name="" id="menuPerfil">
-                <nav class="menuPerfil">
-                    <ul>
-                        <li>Cerrar sesion</li>
-                    </ul>
-                </nav>
-            </div>
+        <div class="navbar-center">
+            <a class="btn btn-ghost text-xl">daisyUI</a>
+        </div>
+        <div class="navbar-end">
+            <button class="btn btn-ghost btn-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </button>
+            <input class="input validator" type="email" required placeholder="mail@site.com" />
+            <button class="btn btn-ghost btn-circle">
+                <div class="indicator">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                    <span class="badge badge-xs badge-primary indicator-item"></span>
+                </div>
+            </button>
+        </div>
         </div>
     </header>
-    
+
+
 
     <main>
         <?= $content ?>
@@ -48,4 +67,5 @@
 
     </footer>
 </body>
+
 </html>
