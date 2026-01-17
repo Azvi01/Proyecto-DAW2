@@ -19,7 +19,7 @@ services:
   php:
     build:
       context: .
-      dockerfile: ./MiauGuauTech/Dockerfile
+      dockerfile: ./tomaJeroma/Dockerfile
     container_name: tomajeroma_php
     restart: always
     volumes:
