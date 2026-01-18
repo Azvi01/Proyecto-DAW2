@@ -1,4 +1,4 @@
-# 🐾 MiauGuauTech - eCommerce Especializado
+# 🗣 Toma JEroma - eCommerce Especializado
 
 Bienvenido a **TomaJeroma**, una plataforma de comercio electrónico. Este proyecto ha sido desarrollado como parte del ciclo formativo de Grado Superior en **Desarrollo de Aplicaciones Web (DAW)**.
 

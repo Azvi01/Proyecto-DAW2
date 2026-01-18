@@ -24,4 +24,11 @@
             return false;
         }
     }
+
+    function validateNumber($number){
+        if (is_numeric($number) and $number===9) {
+            return true;
+        }
+            return false;
+    }
 ?>
