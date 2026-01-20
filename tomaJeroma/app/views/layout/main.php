@@ -10,7 +10,7 @@ $categories = $repo->getCategories();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiauGuauTech</title>
+    <title>Toma Jeroma</title>
 
     <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -48,7 +48,7 @@ $categories = $repo->getCategories();
         </div>
         <!--HEADER lOGO -->
         <div class="navbar-center py-2">
-            <img class="text-xl w-25 h-10 " src="./img/logo-sin-fondo.png" />
+            <img class="w-25 h-10 " src="./img/logo-sin-fondo.png" />
         </div>
         <!--HEADER  BUSQUEDA Y CARRITO -->
         <div class="navbar-end flex-1">
