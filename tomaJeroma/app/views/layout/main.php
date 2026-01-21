@@ -35,7 +35,7 @@ $categories = $repo->getCategories();
                 <div class="drawer-side">
                     <label for="my-drawer-1" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu bg-base-200 min-h-full w-80 p-4 text-2xl flex gap-5">
-                        <li><a href="#">Inicio</a></li>
+                        <li><a href="index.php?controller=Products">Inicio</a></li>
                         <li>
                             <a href="#">Categorias</a>
                             <ul class="menu">
@@ -100,12 +100,24 @@ $categories = $repo->getCategories();
     </header>
 
 
+<<<<<<< HEAD
+    <main class="flex-1 grid gap-4 px-4  
+    grid-cols-2
+    sm:grid-cols-3
+    md:grid-cols-4
+    lg:grid-cols-5
+    xl:grid-cols-6">
+    <?= $content ?>
+</main>
+
+=======
     <main class="flex-1 grid gap-6 grid-cols-2 px-4 
         md:grid-cols-3
         lg:grid-cols-4
         xl:grid-cols-5 ">
         <?= $content ?>
     </main>
+>>>>>>> 681e6fb0de2857b7b6f37adf3d4d23472c85dfd0
 
     <footer>
         <footer class="footer footer-horizontal footer-center bg-base-300 text-base-content rounded p-10">

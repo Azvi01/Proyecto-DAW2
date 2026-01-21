@@ -39,5 +39,9 @@
                 return [];
             }
         }
+
+        public function getProduct() {
+            
+        }
     }
 ?>

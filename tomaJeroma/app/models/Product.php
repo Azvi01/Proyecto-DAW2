@@ -50,5 +50,19 @@
                 return round($this->base_price - $this->offers_value,2);
             }
         }
+
+        public function getOffer() {
+            switch ($this->offers_type) {
+                case 'percentage':
+                    return $this->offers_value."%";
+                    break;
+                case 'fixed':
+                    return "-".$this->offers_value."€";
+                    break;
+                default:
+                    return "Error";
+                    break;
+            }
+        }
     }
 ?>
