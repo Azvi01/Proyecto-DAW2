@@ -20,12 +20,12 @@ class UserRepository extends Model
 
     public function RegisterUser(User $u)
     {
-        $sql = " INSERT INTO users (hashed_pass, mail, telf, role) 
+        $sql = "INSERT INTO users (hashed_pass, mail, telf, role) 
                 VALUES(:pass, :email ,:telfNumber, 'user')";
 
         try {
             $stmt = $this->db->prepare($sql);
-        $res = $stmt->execute([
+            $res = $stmt->execute([
             ':pass' => $u->getHashedPass(),
             ':email'   => $u->getEmail(),
             ':telfNumber' => $u->getNumber(),

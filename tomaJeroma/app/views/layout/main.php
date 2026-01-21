@@ -49,6 +49,8 @@ $categories = $repo->getCategories();
                 </div>
             </div>
         </div>
+        <!-- LOGIN -->
+        <a class="navbar-center py-1" href="index.php?controller=Register&action=index">Login</a>
         <!--HEADER lOGO -->
         <div class="navbar-center py-2">
             <img class="w-25 h-10 " src="./img/logo-sin-fondo.png" />
@@ -98,7 +100,7 @@ $categories = $repo->getCategories();
     </header>
 
 
-    <main class="flex-1 grid gap-6 grid-cols-2 px-4
+    <main class="flex-1 grid gap-6 grid-cols-2 px-4 
         md:grid-cols-3
         lg:grid-cols-4
         xl:grid-cols-5 ">
