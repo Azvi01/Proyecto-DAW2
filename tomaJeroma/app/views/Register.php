@@ -1,16 +1,17 @@
-<form action="index.php?Controller=Login&Action=auth" method="post">
-    <label for="mail">Correo Electronico: </label>
-    <input type="email" name="mail" id="mail">
+<form class=" grid place-content-center fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 " action="index.php?controller=Register&action=auth" method="post">
+    <legend class="fieldset-legend">Register</legend>
+    <label class="label" for="mail">Correo Electronico: </label>
+    <input class="input" type="email" name="mail" id="mail" required>
 
-    <label for="telfNumber">Numero de telefono: </label>
-    <input type="number" name="telfNumber" id="telfNumber">
+    <label class="label" for="telfNumber">Numero de telefono: </label>
+    <input class="input" type="number" name="telfNumber" id="telfNumber" required>
 
-    <label for="pass">Contraseña: </label>
-    <input type="password" name="pass" id="pass">
+    <label class="label" for="pass">Contraseña: </label>
+    <input class="input" type="password" name="pass" id="pass" required>
 
-    <label for="passConf">Confirmar contraseña: </label>
-    <input type="password" name="passConf" id="passConf">
+    <label class="label" for="passConf">Confirmar contraseña: </label>
+    <input class="input" type="password" name="passConf" id="passConf" required>
 
-    
-    <input type="submit" value="Enviar">
+
+    <input class="btn btn-neutral mt-4" type="submit" value="Enviar">
 </form>

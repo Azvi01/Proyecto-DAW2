@@ -1,6 +1,6 @@
 <?php
     require_once('../app/controllers/LoginController.php');
-
+    
     function sanitizarTexto(string $texto){
         return htmlspecialchars($texto, ENT_QUOTES, "UTF-8");
     }
@@ -18,7 +18,7 @@
     }
 
     function validarPass($pass){
-        if (sanitizarTexto($pass) && strlen(sanitizarTexto($pass))>6) {
+        if (sanitizarTexto($pass) && strlen($pass)>6) {
             return true;
         } else {
             return false;
@@ -26,7 +26,7 @@
     }
 
     function validateNumber($number){
-        if (is_numeric($number) and $number===9) {
+        if (is_numeric($number) && strlen($number)===9) {
             return true;
         }
             return false;
