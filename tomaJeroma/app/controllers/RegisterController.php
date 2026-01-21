@@ -1,4 +1,4 @@
-    <?php
+<?php
     require_once('../app/controllers/SanitizedController.php');
     require_once('../app/models/UserRepository.php');
     class RegisterController{
@@ -52,7 +52,8 @@
             {
                 View::render('Register');
             }
-        }
-    
-    
-    ?>
+            
+            
+                
+}
+?>

@@ -40,4 +40,18 @@ class UserRepository extends Model
         }
         
     }
+
+    protected function deleteUserById(int $id)  {
+        $sql = 'DELETE FROM users WHERE id = :id';
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $res = $stmt->execute([
+            ':id' => $id]);
+            return $res ? $this->db->lastInsertId() : false;
+        }catch (PDOException $e) {
+            error_log($e->getMessage());
+            return [];
+        }
+}
 }

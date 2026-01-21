@@ -50,7 +50,7 @@ $categories = $repo->getCategories();
             </div>
         </div>
         <!-- LOGIN -->
-        <a class="navbar-center py-1" href="index.php?controller=Register&action=index">Login</a>
+        <a class="navbar-center py-1" href="index.php?controller=Login&action=index">Login</a>
         <!--HEADER lOGO -->
         <div class="navbar-center py-2">
             <img class="w-25 h-10 " src="./img/logo-sin-fondo.png" />

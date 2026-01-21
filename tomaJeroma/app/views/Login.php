@@ -1,9 +1,12 @@
-<form action="index.php?Controller=Login&Action=auth" method="post">
-    <label for="mail">Correo Electronico: </label>
-    <input type="email" name="mail" id="mail">
+<form class=" grid place-content-center fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 " Ñaction="index.php?Controller=Login&Action=auth" method="post">
 
-    <label for="pass">Contraseña: </label>
-    <input type="password" name="pass" id="pass">
+    <legend class="fieldset-legend">Login</legend>
+    <label class="label" for="mail">Correo Electronico: </label>
+    <input class="input" type="email" name="mail" id="mail" required>
+    <label class="label" for="pass">Contraseña: </label>
+    <input class="input" type="password" name="pass" id="pass" required>
+    <input class="btn btn-neutral mt-4" type="submit" value="Enviar">
 
-    <input type="submit" value="Enviar">
+    <p>No tienes una cuenta?</p>
+    <a class='color-blue-900' href="index.php?controller=Register&action=index"> Registrate aqui</a>
 </form>

@@ -14,4 +14,7 @@
 
 
     <input class="btn btn-neutral mt-4" type="submit" value="Enviar">
+
+    <p>Ya tienes una cuenta?</p>
+    <a class='color-blue-900' href="index.php?controller=Login&action=index"> Inicia sesión aqui</a>
 </form>
