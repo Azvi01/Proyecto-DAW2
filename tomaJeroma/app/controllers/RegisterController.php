@@ -1,6 +1,8 @@
 <?php
     require_once('../app/controllers/SanitizedController.php');
+    require_once('../app/controllers/LoginController.php');
     require_once('../app/models/UserRepository.php');
+
     class RegisterController{
 
         public function auth(){
@@ -33,7 +35,8 @@
 
 
                 $this->createUser($email, $telfNumber, $pass);
-                $this->index();
+                $login = new LoginController;
+                $login->index();
             }
         }
             public function createUser(string  $email, int $telfNumber, string $pass)

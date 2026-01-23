@@ -1,6 +1,7 @@
 <?php
     require_once("../app/libs/View.php");
     require_once("../app/libs/Session.php");
+    require_once("../app/libs/JWTToken.php");
 
     Session::init();
     

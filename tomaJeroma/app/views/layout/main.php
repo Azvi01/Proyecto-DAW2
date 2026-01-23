@@ -1,5 +1,6 @@
 <?php
 require_once("../app/models/CategoryRepository.php");
+
 $repo = new CategoryRepository();
 $categories = $repo->getCategories();
 ?>
@@ -50,13 +51,23 @@ $categories = $repo->getCategories();
             </div>
         </div>
         <!-- LOGIN -->
-        <a class="navbar-center py-1" href="index.php?controller=Login&action=index">Login</a>
+        <div class="navbar py-2">
+            <?php if (Session::get('UserToken')) {
+                $SesionMail = JWTToken::rescueMail(Session::get('UserToken'));
+                echo "<a href='index.php?controller=Login&action=logout'>$SesionMail</a>";
+            } else {
+
+                echo "<a href='index.php?controller=Login&action=index'>Login</a>";
+            } ?>
+        </div>
         <!--HEADER lOGO -->
-        <div class="navbar-center py-2">
-            <img class="w-25 h-10 " src="./img/logo-sin-fondo.png" />
+        <div class="navbar py-2">
+            <a href="index.php?controller=Products">
+                <img class="w-25 h-15 " src="./img/logo-sin-fondo.png" />
+            </a>
         </div>
         <!--HEADER  BUSQUEDA Y CARRITO -->
-        <div class="navbar-end flex-1">
+        <div class="navbar-center ">
             <!--HEADER BUSQUEDA -->
             <button class="btn btn-ghost btn-circle">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -106,8 +117,8 @@ $categories = $repo->getCategories();
     md:grid-cols-4
     lg:grid-cols-5
     xl:grid-cols-6">
-    <?= $content ?>
-</main>
+        <?= $content ?>
+    </main>
 
 
     <footer>
