@@ -41,7 +41,7 @@ class UserRepository extends Model
         
     }
 
-    protected function deleteUserById(int $id)  {
+    public function deleteUserById(int $id)  {
         $sql = 'DELETE FROM users WHERE id = :id';
 
         try {
