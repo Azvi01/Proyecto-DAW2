@@ -1,21 +1,29 @@
 <?php
     class User{
-        public $hashedPass;
-        public $email;
-        public $number;
-        public $rol;
+        public $id;
+        public $hashed_pass;
+        public $mail;
+        public $telf;
+        public $role;
+        public $logup_date;
 
-        public function getHashedPass() {
-            return $this->hashedPass;
+        public function getHashed_pass() {
+            return $this->hashed_pass;
         }
-        public function getEmail() {
-            return $this->email;
+        public function getMail() {
+            return $this->mail;
         }
-        public function getNumber() {
-            return $this->number;
+        public function getTelf() {
+            return $this->telf;
         }
-        public function getRol() {
-            return $this->rol;
+        public function getRole() {
+            return $this->role;
+        }
+        public function getId() {
+            return $this->id;
+        }
+        public function getLogup_date() {
+            return $this->logup_date;
         }
     }
 ?>

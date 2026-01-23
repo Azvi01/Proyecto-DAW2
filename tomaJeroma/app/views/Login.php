@@ -1,4 +1,4 @@
-<form class=" grid place-content-center fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 " Ñaction="index.php?Controller=Login&Action=auth" method="post">
+<form class=" grid place-content-center fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 " action="index.php?controller=Login&action=auth" method="post">
 
     <legend class="fieldset-legend">Login</legend>
     <label class="label" for="mail">Correo Electronico: </label>

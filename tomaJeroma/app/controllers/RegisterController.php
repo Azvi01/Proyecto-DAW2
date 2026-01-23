@@ -39,10 +39,10 @@
             public function createUser(string  $email, int $telfNumber, string $pass)
             {
                 $u = new User;
-                $u->email = $email;
-                $u->number = $telfNumber;
+                $u->mail = $email;
+                $u->telf = $telfNumber;
                 $hash = password_hash($pass, PASSWORD_DEFAULT);
-                $u->hashedPass = $hash;
+                $u->hashed_pass = $hash;
 
                 $repo = new UserRepository;
                 $repo->RegisterUser($u);
