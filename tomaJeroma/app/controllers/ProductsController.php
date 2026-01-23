@@ -12,7 +12,26 @@
 
 
         public function show() {
-            View::render('product');
+            $attrRepo = new AttributesRepository();
+            $productRepo = new ProductsRepository();
+
+            $id = $_GET['id'] ?? '';
+
+            $attrs = $attrRepo->getAttrProduct($id);
+            $product = $productRepo->getProduct($id);
+
+            if (!$product) {
+                Session::set("error","Error al cargar el producto, puede que ese producto no exista.");
+                header("Location: index.php");
+                exit;
+            }
+
+            $data = [
+                "product"=> $product,
+                "attrs"=> $attrs
+            ];
+
+            View::render('product', $data);
         }
     }
 ?>

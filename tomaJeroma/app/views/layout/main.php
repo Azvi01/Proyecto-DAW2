@@ -17,6 +17,26 @@ $categories = $repo->getCategories();
 </head>
 
 <body class="h-dvh flex flex-col gap-4">
+    <?php if (Session::get('error')): ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                document.getElementById("errorModal").showModal();
+            });
+        </script>
+        <div>
+            <dialog id="errorModal" class="modal">
+                <div class="modal-box">
+                    <form method="dialog">
+                        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                            ✕
+                        </button>
+                    </form>
+                    <?= Session::get('error') ?>
+                    <?php Session::delete('error'); ?>
+                </div>
+            </dialog>
+        </div>
+    <?php endif; ?>
 
     <!--HEADER MENU -->
     <header class="navbar bg-base-300 shadow-sm">
@@ -99,15 +119,14 @@ $categories = $repo->getCategories();
         </div>
     </header>
 
-
     <main class="flex-1 grid gap-4 px-4  
     grid-cols-2
     sm:grid-cols-3
     md:grid-cols-4
     lg:grid-cols-5
     xl:grid-cols-6">
-    <?= $content ?>
-</main>
+        <?= $content ?>
+    </main>
 
 
     <footer>
