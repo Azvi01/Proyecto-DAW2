@@ -5,7 +5,7 @@ require_once '../app/models/User.php';
 
 class UserRepository extends Model
 {
-    public function getUsers()
+    protected function getUsers()
     {
         $sql = "SELECT * FROM user";
 
@@ -26,9 +26,9 @@ class UserRepository extends Model
         try {
             $stmt = $this->db->prepare($sql);
             $res = $stmt->execute([
-            ':pass' => $u->getHashedPass(),
-            ':email'   => $u->getEmail(),
-            ':telfNumber' => $u->getNumber(),
+            ':pass' => $u->getHashed_pass(),
+            ':email'   => $u->getMail(),
+            ':telfNumber' => $u->getTelf(),
         ]);
 
         // Si ha ido bien, devolvemos el ID generado. Si no, false.
@@ -54,4 +54,17 @@ class UserRepository extends Model
             return [];
         }
 }
+    public function checkUser(string $email)  {
+        $sql = 'SELECT * FROM users WHERE users.mail = :email';
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+            ':email' => $email]);
+            return $stmt->fetchObject('User');
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return [];
+        }
+    }
 }

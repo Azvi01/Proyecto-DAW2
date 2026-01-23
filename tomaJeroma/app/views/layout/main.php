@@ -100,7 +100,6 @@ $categories = $repo->getCategories();
     </header>
 
 
-<<<<<<< HEAD
     <main class="flex-1 grid gap-4 px-4  
     grid-cols-2
     sm:grid-cols-3
@@ -110,14 +109,6 @@ $categories = $repo->getCategories();
     <?= $content ?>
 </main>
 
-=======
-    <main class="flex-1 grid gap-6 grid-cols-2 px-4 
-        md:grid-cols-3
-        lg:grid-cols-4
-        xl:grid-cols-5 ">
-        <?= $content ?>
-    </main>
->>>>>>> 681e6fb0de2857b7b6f37adf3d4d23472c85dfd0
 
     <footer>
         <footer class="footer footer-horizontal footer-center bg-base-300 text-base-content rounded p-10">
