@@ -28,6 +28,7 @@
         <?= $product->getNameCategory() ?>
     </span>
 
+    <!-- PRECIO SIEMPRE ABAJO -->
     <div class="mt-auto pt-2 flex items-center gap-2">
         <?php if ($product->hasOffer()): ?>
             <span class="text-sm line-through decoration-red-500">
