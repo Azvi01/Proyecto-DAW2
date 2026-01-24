@@ -33,5 +33,28 @@
 
             View::render('product', $data);
         }
+
+        public function showProductCategory() {
+            $categoryID = $_GET['categoryId'] ?? '';
+            $repo = new ProductsRepository();
+            $products = $repo->getProductByCategory($categoryID);
+            if (!$products) {
+                Session::set("error","Error al cargar los productos de esa categoria, puede que no exista.");
+                header("Location: index.php");
+                exit;
+            }
+            View::render("list-product", ["products"=>$products]);
+        }
+
+        public function showProductOffer() {
+            $categoryID = $_GET['categoryId'] ?? '';
+            $repo = new ProductsRepository();
+            $products = $repo->getProductInOffer();
+            if (!$products) {
+                View::render("list-product", ["error"=>"No hay produtos en oferta"]);
+                exit;
+            }
+            View::render("list-product", ["products"=>$products]);
+        }
     }
 ?>
