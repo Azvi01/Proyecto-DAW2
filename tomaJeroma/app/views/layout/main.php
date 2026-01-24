@@ -24,7 +24,7 @@ $categories = $repo->getCategories();
                 document.getElementById("errorModal").showModal();
             });
         </script>
-        <div class="absolute">
+        <div>
             <dialog id="errorModal" class="modal text-xl">
                 <div class="modal-box p-5">
                     <form method="dialog">
