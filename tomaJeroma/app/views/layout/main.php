@@ -25,8 +25,8 @@ $categories = $repo->getCategories();
             });
         </script>
         <div>
-            <dialog id="errorModal" class="modal">
-                <div class="modal-box">
+            <dialog id="errorModal" class="modal text-xl">
+                <div class="modal-box p-5">
                     <form method="dialog">
                         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                             ✕
@@ -61,11 +61,11 @@ $categories = $repo->getCategories();
                             <a href="#">Categorias</a>
                             <ul class="menu">
                                 <?php foreach ($categories as $category) : ?>
-                                    <li><a href="#" class=""><?= $category->getName(); ?></a></li>
+                                    <li><a href="index.php?controller=Products&action=showProductCategory&categoryId=<?= $category->getId(); ?>" ><?= $category->getName(); ?></a></li>
                                 <?php endforeach; ?>
                             </ul>
                         </li>
-                        <li><a href="#">Ofertas</a></li>
+                        <li><a href="index.php?controller=Products&action=showProductOffer">Ofertas</a></li>
                     </ul>
                 </div>
             </div>
@@ -130,12 +130,7 @@ $categories = $repo->getCategories();
         </div>
     </header>
 
-    <main class="flex-1 grid gap-4 px-4  
-    grid-cols-2
-    sm:grid-cols-3
-    md:grid-cols-4
-    lg:grid-cols-5
-    xl:grid-cols-6">
+    <main class="flex-1 block">
         <?= $content ?>
     </main>
 
