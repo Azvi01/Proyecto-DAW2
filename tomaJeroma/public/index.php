@@ -6,7 +6,7 @@
     Session::init();
     
     $nombre_controlador = $_GET['controller'] ?? 'Products';
-    $accion = $_GET['action'] ?? 'index';
+    $accion = $_GET['action'] ?? 'products';
 
     $nombre_clase = ucfirst($nombre_controlador) . 'Controller';
 

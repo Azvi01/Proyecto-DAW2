@@ -1,10 +1,3 @@
-<?php
-require_once("../app/models/CategoryRepository.php");
-
-$repo = new CategoryRepository();
-$categories = $repo->getCategories();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,9 +53,11 @@ $categories = $repo->getCategories();
                         <li>
                             <a href="#">Categorias</a>
                             <ul class="menu">
+                                <?php if ($categories):?>
                                 <?php foreach ($categories as $category) : ?>
                                     <li><a href="index.php?controller=Products&action=showProductCategory&categoryId=<?= $category->getId(); ?>" ><?= $category->getName(); ?></a></li>
                                 <?php endforeach; ?>
+                                <?php endif;?>
                             </ul>
                         </li>
                         <li><a href="index.php?controller=Products&action=showProductOffer">Ofertas</a></li>
@@ -94,7 +89,9 @@ $categories = $repo->getCategories();
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
             </button>
-            <input class="input validator" type="text" required placeholder="buscar producto" />
+            <form action="index.php?controller=Products&action=search" method="post">
+                <input class="input" type="text" required placeholder="buscar producto" name="buscar"/>
+            </form>
             <!--HEADER CARRITO -->
             <button class="btn btn-ghost btn-circle">
                 <div class="indicator">
