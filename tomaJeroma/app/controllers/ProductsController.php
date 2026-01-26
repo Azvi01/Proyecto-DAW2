@@ -1,13 +1,15 @@
 <?php
     require_once('../app/models/ProductsRepository.php');
     require_once('../app/models/AttributesRepository.php');
+    require_once("../app/models/CategoryRepository.php");
+
 
     class ProductsController{
 
-        public function index(){
+        public function products(){
             $repo = new ProductsRepository();
-            $products = $repo->getProducts();
-            View::render("list-product", ["products"=>$products]);
+            $products = ["products"=>$repo->getProducts()];
+            $this->index($products);
         }
 
 
@@ -31,30 +33,55 @@
                 "attrs"=> $attrs
             ];
 
-            View::render('product', $data);
+            $this->index($data);
         }
 
         public function showProductCategory() {
             $categoryID = $_GET['categoryId'] ?? '';
             $repo = new ProductsRepository();
-            $products = $repo->getProductByCategory($categoryID);
-            if (!$products) {
+            $products = ["products"=>$repo->getProductByCategory($categoryID)];
+            if (!$products['products']) {
                 Session::set("error","Error al cargar los productos de esa categoria, puede que no exista.");
                 header("Location: index.php");
                 exit;
             }
-            View::render("list-product", ["products"=>$products]);
+            $this->index($products);
         }
 
         public function showProductOffer() {
-            $categoryID = $_GET['categoryId'] ?? '';
             $repo = new ProductsRepository();
-            $products = $repo->getProductInOffer();
+            $products = ["products"=>$repo->getProductInOffer()];
             if (!$products) {
                 View::render("list-product", ["error"=>"No hay produtos en oferta"]);
                 exit;
             }
-            View::render("list-product", ["products"=>$products]);
+            $this->index($products);
+        }
+
+        public function search() {
+            $texto = $_POST['buscar'] ?? '';
+
+            if (!$texto) {
+                
+            }
+        }
+
+        public function index($products) {
+            $repo = new CategoryRepository();
+            $categories = $repo->getCategories();
+
+            if (isset($products['attrs'])) {
+                View::render('product', [
+                    "attrs"=>$products['attrs'],
+                    "product"=>$products['product'],
+                    "categories"=>$categories
+                ]);
+            }else{
+                View::render("list-product", [
+                    "products"=>$products['products'],
+                    "categories"=>$categories
+                    ]);
+            }
         }
     }
 ?>

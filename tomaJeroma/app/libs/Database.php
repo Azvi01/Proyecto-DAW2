@@ -20,8 +20,8 @@
                 
             } catch (PDOException $e) {
                 error_log("Error Crítico de BBDD: " . $e->getMessage());
-                
-                throw new Exception("No se pudo conectar al gestor de base de datos.");
+                View::render("error/error");
+                exit;
             }
         }
 

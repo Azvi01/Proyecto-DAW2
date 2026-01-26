@@ -4,6 +4,8 @@ require_once('../app/models/UserRepository.php');
 require_once('../app/controllers/ProductsController.php');
 require_once '../app/libs/JWTToken.php';
 require_once '../app/libs/Session.php';
+require_once("../app/models/CategoryRepository.php");
+
 class LoginController
 {
 
@@ -50,7 +52,9 @@ class LoginController
 
     public function index()
     {
-        View::render('Login');
+        $repo = new CategoryRepository();
+        $categories = $repo->getCategories();
+        View::render('Login', ['categories'=>$categories]);
     }
 
     public function deleteUser()

@@ -2,6 +2,8 @@
     require_once('../app/controllers/SanitizedController.php');
     require_once('../app/controllers/LoginController.php');
     require_once('../app/models/UserRepository.php');
+    require_once("../app/models/CategoryRepository.php");
+
 
     class RegisterController{
 
@@ -53,7 +55,9 @@
 
             public function index()
             {
-                View::render('Register');
+                $repo = new CategoryRepository();
+                $categories = $repo->getCategories();
+                View::render('Register', ['categories'=>$categories]);
             }
             
             
