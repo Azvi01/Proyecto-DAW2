@@ -41,7 +41,6 @@ class LoginController
             $Token = JWTToken::generarToken($userMail, $userRole);
 
             Session::set('UserToken', $Token);
-            echo JWTToken::rescueMail($Token);
         } else {
 
             Session::set("error", "Error, el usuario no existe.");

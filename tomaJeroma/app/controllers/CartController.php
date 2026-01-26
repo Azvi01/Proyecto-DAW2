@@ -2,6 +2,8 @@
 require_once('../app/controllers/LoginController.php');
 require_once('../app/controllers/ProductsController.php');
 require_once('../app/models/ProductsRepository.php');
+require_once("../app/models/CategoryRepository.php");
+
 class CartController
 {
 
@@ -20,22 +22,24 @@ class CartController
 
         Session::set('Carrito', $Carrito);
 
-        $contrPro = new ProductsController;
-        $contrPro->index();
+        header("Location: index.php");
     }
 
     public function showCart()
     {
         $repoPro = new ProductsRepository;
-        $producto = [];
-        $Carrito = Session::get('Carrito');
-        foreach ($Carrito as $id) {
-            $producto[] = $repoPro->getProduct($id);
+        $productos = [];
+        $Carrito = Session::get('Carrito') ?? [];
+
+        foreach ($Carrito as $idProducto => $info) {
+            $producto = $repoPro->getProduct($idProducto);
+            $productos[] = $producto;
         }
-        $this->index($producto);
+
+        $this->index($productos);
     }
 
-    public function deleteProductToCart() {}
+
 
     public function chekLogin()
     {
@@ -45,12 +49,56 @@ class CartController
             $loginRepo->index();
             exit;
         } else {
-            header('Location: index.php?controller=cart&action=index');
+            $this->showCart();
         }
     }
 
-    public function index($data)
-    {
-        View::render('Cart', ['product' => $data]);
+    public function addOne() {
+        if (!isset($_POST['id'])) return;
+        $id = $_POST['id'];
+        $carrito = Session::get('Carrito') ?? [];
+
+        if (isset($carrito[$id])) {
+            $carrito[$id]['cantidad']++;
+        }
+
+        Session::set('Carrito', $carrito);
+        header("Location: index.php?controller=Cart&action=showCart"); // Ajusta la URL según tu sistema de rutas
+        exit;
     }
+
+    public function removeOne() {
+        if (!isset($_POST['id'])) return;
+        $id = $_POST['id'];
+        $carrito = Session::get('Carrito') ?? [];
+
+        if (isset($carrito[$id]) && $carrito[$id]['cantidad'] > 1) {
+            $carrito[$id]['cantidad']--;
+        }
+
+        Session::set('Carrito', $carrito);
+        header("Location: index.php?controller=Cart&action=showCart");
+        exit;
+    }
+
+    public function deleteProductToCart() {
+        if (!isset($_POST['id'])) return;
+        $id = $_POST['id'];
+        $carrito = Session::get('Carrito') ?? [];
+
+        if (isset($carrito[$id])) {
+            unset($carrito[$id]);
+        }
+
+        Session::set('Carrito', $carrito);
+        header("Location: index.php?controller=Cart&action=showCart");
+        exit;
+    }
+
+    public function index($data = [])
+{
+    $repo = new CategoryRepository();
+    $categories = $repo->getCategories();
+    View::render('Cart', ['product' => $data, 'categories'=>$categories]);
+}
 }
