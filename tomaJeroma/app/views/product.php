@@ -10,7 +10,7 @@
     </div>
 
     <!-- INFO -->
-    <form action="index.php?controller=cart&action=addProductToCart" method="get" class="flex flex-col gap-4">
+    <form action="index.php?controller=cart&action=addProductToCart" method="post" class="flex flex-col gap-4">
 
         <h2 class="text-2xl md:text-3xl font-bold text-content">
             <?= $product->getNameProduct() ?>

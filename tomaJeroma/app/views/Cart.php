@@ -1,17 +1,17 @@
 <?php 
 
 
-if (empty($Carrito)): ?>
+if (empty(Session::get('Carrito'))): ?>
     <h1>Vaya, parece que el carrito esta vacio. Echa un vistazo a la web y compra algo.</h1>
 
 <?php else : ?>
     <ul class="list bg-base-100 rounded-box shadow-md ">
         <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Objetos en el carrito</li>
-
-        <?php foreach ($Carrito as $product => $value):  ?>
+        <?= print_r(Session::get('Carrito')) ?>
+        <?php foreach (Session::get('Carrito') as $product):  ?>
 
             <li class="list-row">
-                <div class="text-4xl font-thin opacity-30 tabular-nums"><?= $product->get ?>?></div>
+                <div class="text-4xl font-thin opacity-30 tabular-nums"></div>
                 <div><img
                         src="<?= $product->getImgProduct() ?>"
                         alt="<?= $product->getNameProduct() ?>"
