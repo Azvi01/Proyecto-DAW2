@@ -31,22 +31,26 @@ class LoginController
             $userMail = $userLog->getMail();
             $userPass = $userLog->getHashed_pass();
             $userRole = $userLog->getRole();
+            if (!password_verify($pass, $userPass)) {
+                Session::set("error", "Error, contraseña incorrrecta.");
+                header("Location: index.php");
+                exit;
+            }
+
+
+            $Token = JWTToken::generarToken($userMail, $userRole);
+
+            Session::set('UserToken', $Token);
+            echo JWTToken::rescueMail($Token);
         } else {
-            echo ('error usuario no existe');
+
+            Session::set("error", "Error, el usuario no existe.");
+            header("Location: index.php");
+            exit;
         }
 
-        if (password_verify($pass, $userPass)) {
-            echo ('todo piola');
-        } else {
 
-            echo ('La contraseña no coincide');
-        }
 
-        $Token = JWTToken::generarToken($userMail,$userRole);
-
-        Session::set('UserToken', $Token);
-        echo JWTToken::rescueMail($Token);
-        
         $this->index();
     }
 
@@ -63,10 +67,11 @@ class LoginController
         $repo->deleteUserById($_POST['id']);
         $this->index();
     }
-        
-    public function logout()  {
-            Session::delete('UserToken');
-            Session::destroy();
-            $this->index();
+
+    public function logout()
+    {
+        Session::delete('UserToken');
+        Session::destroy();
+        $this->index();
     }
 }

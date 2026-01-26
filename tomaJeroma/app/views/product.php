@@ -10,7 +10,7 @@
     </div>
 
     <!-- INFO -->
-    <form action="#" method="get" class="flex flex-col gap-4">
+    <form action="index.php?controller=cart&action=addProductToCart" method="post" class="flex flex-col gap-4">
 
         <h2 class="text-2xl md:text-3xl font-bold text-content">
             <?= $product->getNameProduct() ?>
@@ -49,9 +49,10 @@
             </select>
 
             <button
-                type="submit"
-                class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition"
+            type="submit"
+            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition"
             >
+            <input type="hidden" name="idProducto" value="<?= $product->getIdProduct() ?>">
                 Añadir al carrito
             </button>
         </div>
