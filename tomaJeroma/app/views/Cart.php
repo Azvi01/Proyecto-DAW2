@@ -22,7 +22,10 @@
 
                 <div class="list-col-grow">
                     <div class="text-lg font-semibold"><?= $item->getNameProduct() ?></div>
-                    <div class="text-base font-bold text-primary"><?= $item->getBasePriceProduct() ?> €</div>
+                    <div class="text-base font-bold text-primary"><?= $item->getFinalPrice() ?> €</div>
+                    <?php if ($item->hasOffer()): ?>
+                    <div class="text-sm line-through decoration-red-500"><?= $item->getBasePriceProduct() ?></div>
+                    <?php endif;?>
                 </div>
 
                 <div class="flex items-center gap-4">
