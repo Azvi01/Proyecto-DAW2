@@ -52,7 +52,7 @@
             $repo = new ProductsRepository();
             $products = ["products"=>$repo->getProductInOffer()];
             if (!$products) {
-                View::render("list-product", ["error"=>"No hay produtos en oferta"]);
+                $this->index(['error'=>"No hay producots en oferta."]);
                 exit;
             }
             $this->index($products);
@@ -60,15 +60,31 @@
 
         public function search() {
             $texto = $_POST['buscar'] ?? '';
+            $repo = new ProductsRepository();
 
             if (!$texto) {
-                
+                Session::set("error","Error al buscar un producto, no puedes dejarlo vacio.");
+                header("Location: index.php");
+                exit;
             }
+
+            $products = $repo->getProductByFilter($texto);
+            if (!$products) {
+                $this->index(['error'=>"No se ha encontrado un producto con el nombre $texto"]);
+                exit;
+            }
+
+            $this->index(["products"=>$products]);
         }
 
         public function index($products) {
             $repo = new CategoryRepository();
             $categories = $repo->getCategories();
+
+            if (isset($products['error'])) {
+                View::render('list-product', ["error"=>$products['error'], "categories"=>$categories]);
+                exit;
+            }
 
             if (isset($products['attrs'])) {
                 View::render('product', [
