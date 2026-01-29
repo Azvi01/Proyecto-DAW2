@@ -35,6 +35,7 @@ class LoginController
             $userMail = $userLog->getMail();
             $userPass = $userLog->getHashed_pass();
             $userRole = $userLog->getRole();
+            $userId = $userLog->getId();
             if (!password_verify($pass, $userPass)) {
                 Session::set("error", "Error, contraseña incorrrecta.");
                 header("Location: index.php?controller=Login&action=index");
@@ -42,7 +43,7 @@ class LoginController
             }
 
 
-            $Token = JWTToken::generarToken($userMail, $userRole);
+            $Token = JWTToken::generarToken($userMail, $userRole, $userId);
 
             Session::set('UserToken', $Token);
         } else {
