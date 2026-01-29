@@ -8,6 +8,7 @@
         public $category_id;
         public $fabricante;
         public $stock;
+        public $active;
 
         public $offers_id;
         public $offers_name;
