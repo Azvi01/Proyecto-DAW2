@@ -2,9 +2,9 @@
     require_once '../app/libs/Session.php';
     class JWTToken {
 
-    static function generarToken($mail,$role) : string {
+    static function generarToken($mail,$role,$user_id) : string {
         $header = base64_encode(json_encode(["alg"=>'HS256','typ'=>'JWT']));
-        $payload = base64_encode(json_encode(["sub"=>"UserData$mail",'mail'=>$mail,'role'=>$role,'iat'=>time(),'exp'=>time()+3600]));
+        $payload = base64_encode(json_encode(["sub"=>"UserData$mail",'mail'=>$mail,'role'=>$role,'user_id'=>$user_id,'iat'=>time(),'exp'=>time()+3600]));
         $key='clave_secreta';
         $signature=base64_encode(hash_hmac('sha256',"$header.$payload",$key,true));
 
@@ -40,7 +40,17 @@
     }
 
 
-    }
+    
+    static function rescueUserid($JWT) :string {
+        list($header64, $payload64, $signature64) = explode(".",$JWT);
+        $payload = json_decode(base64_decode($payload64),true);
+        
+        return $payload['user_id'];
+        }
+        
+        }
+
+    
 
 
 ?>
