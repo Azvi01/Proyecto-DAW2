@@ -70,8 +70,11 @@
             <?php if (Session::get('UserToken')) {
                 $SesionMail = JWTToken::rescueMail(Session::get('UserToken'));
                 echo "<a href='index.php?controller=Login&action=logout'>$SesionMail</a>";
-            } else {
 
+                
+                    echo "<a href='index.php?controller=Admin&action=index'>Dashboard</a>";
+                
+            } else {
                 echo "<a href='index.php?controller=Login&action=index'>Login</a>";
             } ?>
         </div>
@@ -102,13 +105,13 @@
                             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                         </svg>
                         <span class="badge badge-xs badge-primary indicator-item"><?php
-                                                                                    $carrito = Session::get("Carrito") ?? [];
-                                                                                    if (count($carrito) > 9) {
-                                                                                        echo "+9";
-                                                                                    } else {
-                                                                                        echo count($carrito);
-                                                                                    }
-                                                                                    ?>
+                            $carrito = Session::get("Carrito") ?? [];
+                            if (count($carrito) > 9) {
+                                echo "+9";
+                            } else {
+                                echo count($carrito);
+                            }
+                            ?>
                         </span>
                     </a>
                 </div>
