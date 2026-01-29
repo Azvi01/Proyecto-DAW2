@@ -15,12 +15,16 @@ class LoginController
             if (validarEmail($_POST['mail'])) {
                 $email = $_POST['mail'];
             } else {
-                echo ('error en el mail');
+                Session::set("error", "Error, el usuario no existe.");
+                header("Location: index.php?controller=Login&action=index");
+                exit;
             }
             if (validarPass($_POST['pass'])) {
                 $pass = $_POST['pass'];
             } else {
-                echo ('error en el numero');
+                Session::set("error", "Error, contraseña incorrrecta.");
+                header("Location: index.php?controller=Login&action=index");
+                exit;
             }
         }
 
@@ -33,7 +37,7 @@ class LoginController
             $userRole = $userLog->getRole();
             if (!password_verify($pass, $userPass)) {
                 Session::set("error", "Error, contraseña incorrrecta.");
-                header("Location: index.php");
+                header("Location: index.php?controller=Login&action=index");
                 exit;
             }
 
@@ -44,7 +48,7 @@ class LoginController
         } else {
 
             Session::set("error", "Error, el usuario no existe.");
-            header("Location: index.php");
+            header("Location: index.php?controller=Login&action=index");
             exit;
         }
 

@@ -63,7 +63,7 @@ class CartController
         }
 
         Session::set('Carrito', $carrito);
-        header("Location: index.php?controller=Cart&action=showCart"); // Ajusta la URL según tu sistema de rutas
+        $this->showCart(); 
         exit;
     }
 
@@ -77,7 +77,7 @@ class CartController
         }
 
         Session::set('Carrito', $carrito);
-        header("Location: index.php?controller=Cart&action=showCart");
+        $this->showCart();
         exit;
     }
 
@@ -91,7 +91,7 @@ class CartController
         }
 
         Session::set('Carrito', $carrito);
-        header("Location: index.php?controller=Cart&action=showCart");
+        $this->showCart();;
         exit;
     }
 

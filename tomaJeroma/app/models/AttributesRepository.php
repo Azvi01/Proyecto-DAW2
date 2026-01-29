@@ -18,9 +18,10 @@
             ";
 
             try {
+                
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute([":id"=>$id]);
-
+                
                 return $stmt->fetchAll(PDO::FETCH_CLASS, 'Attributes');
             } catch (\PDOException $e) {
                 error_log($e->getMessage());
