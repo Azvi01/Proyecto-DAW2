@@ -12,13 +12,17 @@
                 if (validarEmail($_POST['mail'])) {
                     $email = $_POST['mail'];
                 }else {
-                    echo('error en el mail');
+                    Session::set("error", "Error, correo invalido.");
+                    header("Location: index.php?controller=Register&action=index");
+                exit;
                 }
 
                 if (validateNumber($_POST['telfNumber'])) {
                     $telfNumber = $_POST['telfNumber'];
                 }else {
-                    echo('error en el numero');
+                    Session::set("error", "Error, numero de telefono no valido.");
+                    header("Location: index.php?controller=Register&action=index");
+                    exit;
                 }
 
 
@@ -28,11 +32,15 @@
                     if ($pass === $passConf) {
                         $pass = $_POST['pass'];
                     }else {
-                    echo('error en el pass (No son iguales)');
+                    Session::set("error", "Error, las contraseñas no coinciden.");
+                    header("Location: index.php?controller=Register&action=index");
+                    exit;
                 }
 
                 }else {
-                    echo('error en la pass');
+                    Session::set("error", "Error, contraseña debe tener como minimo 6 digitos.");
+                    header("Location: index.php?controller=Register&action=index");
+                    exit;
                 }
 
 
