@@ -5,7 +5,7 @@
 <?php else: ?>
     <div class="flex flex-col lg:flex-row gap-8">
         
-        <div class="flex-grow">
+        <div class="grow">
             <ul class="list bg-base-100 rounded-box shadow-md">
                 <li class="p-4 pb-2 text-xl opacity-60 tracking-wide border-b border-base-200">Objetos en el carrito</li>
 
@@ -87,7 +87,7 @@
                     </div>
 
                     <div class="card-actions mt-6">
-                        <form action="index.php?controller=Order&action=checkout" method="POST" class="w-full">
+                        <form action="index.php?controller=Pedido&action=checkout" method="POST" class="w-full">
                             <button type="submit" class="btn btn-primary btn-block text-lg">
                                 Realizar Pedido
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
