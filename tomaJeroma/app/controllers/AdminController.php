@@ -234,11 +234,11 @@ class AdminController
     {
         try {
             $id = $_GET['id'];
-        $repo = new UserRepository();
-        if ($repo->deleteUser($id)) {
-            Session::set('error', "Usuario eliminado definitivamente.");
-        }
-        header("Location: index.php?controller=Admin&action=users");
+            $repo = new UserRepository();
+            if ($repo->deleteUser($id)) {
+                Session::set('error', "Usuario eliminado definitivamente.");
+            }
+            header("Location: index.php?controller=Admin&action=users");
         } catch (PDOException $e) {
             error_log($e->getMessage());
             Session::set('error', "No se puede eliminar, este user me da de comer");
