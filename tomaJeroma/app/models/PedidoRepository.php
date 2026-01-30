@@ -42,11 +42,29 @@ class PedidosRepository extends Model {
         }
     }
 
-    public function getPedidosByUser($userId) {
-        $sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY order_date DESC";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$userId]);
-        return $stmt->fetchAll(PDO::FETCH_CLASS, 'Pedido');
+    
+
+    public function getAllOrdersWithUser($clientId = null) {
+    $sql = "SELECT o.*, u.mail as user_email 
+            FROM orders o 
+            LEFT JOIN users u ON o.user_id = u.id";
+    $params = [];
+
+    if (!empty($clientId)) {
+        $sql .= " WHERE o.user_id = ?";
+        $params[] = $clientId;
     }
+
+    $sql .= " ORDER BY o.order_date DESC";
+
+    try {
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+        return [];
+    }
+}
 }
 ?>
