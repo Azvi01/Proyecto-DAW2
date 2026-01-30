@@ -30,7 +30,8 @@ class ProductsRepository extends Model
                 LEFT JOIN offers o
                     ON op.offer_id = o.id
                 LEFT JOIN category c
-                    ON p.category_id = c.id;
+                    ON p.category_id = c.id
+                WHERE p.active = 1;
             ";
         try {
             $stmt = $this->db->query($sql);
@@ -106,7 +107,7 @@ class ProductsRepository extends Model
                     ON op.offer_id = o.id
                 LEFT JOIN category c
                     ON p.category_id = c.id
-                WHERE c.id = :id;
+                WHERE c.id = :id ;
             ";
         try {
             $stmt = $this->db->prepare($sql);
@@ -206,6 +207,49 @@ class ProductsRepository extends Model
         }
     }
 
+    public function deleteProduct($id)
+    {
+        $sql = "UPDATE products SET active = 0 WHERE id = ?";
+        try {
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([$id]);
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
+    public function getProductsByAdvancedFilter($categoryId = null, $stockStatus = null, $searchTerm = '')
+    {
+        $sql = "SELECT p.*, c.name AS category_name FROM products p 
+            LEFT JOIN category c ON p.category_id = c.id WHERE p.active = 1";
+        $params = [];
+
+        if (!empty($searchTerm)) {
+            $sql .= " AND p.name LIKE ?";
+            $params[] = "%$searchTerm%";
+        }
+
+        if (!empty($categoryId)) {
+            $sql .= " AND p.category_id = ?";
+            $params[] = $categoryId;
+        }
+
+        if ($stockStatus === 'in_stock') {
+            $sql .= " AND p.stock > 0";
+        } elseif ($stockStatus === 'out_of_stock') {
+            $sql .= " AND p.stock <= 0";
+        }
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_CLASS, 'Product');
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
     public function updateProduct($id, $name, $description, $price, $category_id, $fabricante, $stock, $img = null)
     {
         $sql = "UPDATE products SET name=?, description=?, base_price=?, category_id=?, fabricante=?, stock=?";
@@ -220,15 +264,11 @@ class ProductsRepository extends Model
         $params[] = $id;
 
         try {
-            return $this->db->prepare($sql)->execute($params);
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute($params);
         } catch (PDOException $e) {
+            error_log($e->getMessage());
             return false;
         }
-    }
-
-    public function deleteProduct($id)
-    {
-        $sql = "DELETE FROM products WHERE id = ?";
-        return $this->db->prepare($sql)->execute([$id]);
     }
 }

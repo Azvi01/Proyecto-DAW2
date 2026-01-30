@@ -14,12 +14,12 @@
         document.getElementById('form-price').value = p.base_price;
         document.getElementById('form-stock').value = p.stock;
         document.getElementById('form-cat').value = p.category_id;
-        document.getElementById('form-cat').value = p.category_id;
+        document.getElementById('form-img').required = false;
     }
 </script>
 
 <div class="min-h-screen bg-base-300 flex flex-col lg:flex-row">
-
+    <!-- ERRORES-->
     <?php if (Session::get('error')): ?>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
@@ -40,7 +40,7 @@
             </dialog>
         </div>
     <?php endif; ?>
-
+    <!--MENU-->
     <div class="lg:w-72 bg-base-200 border-r border-base-100 p-6 flex flex-col gap-8">
         <div class="flex items-center gap-3 px-2">
             <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary/20">
@@ -54,7 +54,7 @@
 
         <ul class="menu p-0 gap-2">
             <li>
-                <a href="index.php?controller=Admin&action=index" class="active bg-primary/10 text-primary font-bold py-3">
+                <a href="index.php?controller=Admin&action=index" class="hover:bg-base-100 py-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
@@ -62,7 +62,7 @@
                 </a>
             </li>
             <li>
-                <a href="index.php?controller=Admin&action=products" class="hover:bg-base-100 py-3">
+                <a href="index.php?controller=Admin&action=products" class="active bg-primary/10 text-primary font-bold py-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                     </svg>
@@ -101,22 +101,46 @@
                 Añadir nuevo producto
             </label>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div class="md:col-span-2">
-                <form action="index.php?controller=Admin&action=search" method="post">
-                    <input type="text" placeholder="Buscar por nombre o SKU..." class="input input-bordered w-full bg-base-200 border-base-100 focus:border-primary" name="buscar" required />
-                </form>
+    <!-- FILTRADO-->
+        <div class="bg-base-200 p-4 rounded-2xl mb-8 shadow-sm border border-base-100">
+    <form action="index.php" method="GET" class="flex flex-col xl:flex-row gap-4 items-end xl:items-center">
+        <input type="hidden" name="controller" value="Admin">
+        <input type="hidden" name="action" value="filter">
+
+        <div class="form-control w-full xl:flex-1">
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-base-content/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </span>
+                <input type="text" name="buscar" placeholder="Buscar por nombre..." 
+                       value="<?= $_GET['buscar'] ?? '' ?>"
+                       class="input input-bordered w-full pl-10 bg-base-100 border-none focus:ring-2 focus:ring-primary/30 transition-all" />
             </div>
-            <select class="select select-bordered bg-base-200 border-base-100">
-                <option disabled selected>Categoría</option>
-            </select>
-            <select class="select select-bordered bg-base-200 border-base-100">
-                <option disabled selected>Estado de Stock</option>
-                <option>En Stock</option>
-                <option>Poco Stock</option>
-                <option>Agotado</option>
-            </select>
         </div>
+
+        <div class="flex flex-wrap md:flex-nowrap gap-3 w-full xl:w-auto">
+            <select name="category" class="select select-bordered bg-base-100 border-none">
+                <option value="">Todas las Categorías</option>
+                <?php foreach ($categories as $cat): ?>
+                    <option value="<?= $cat->getId() ?>" <?= (isset($_GET['category']) && $_GET['category'] == $cat->getId()) ? 'selected' : '' ?>>
+                        <?= $cat->getName() ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <select name="stock" class="select select-bordered bg-base-100 border-none">
+                <option value="">Estado Stock</option>
+                <option value="in_stock" <?= (isset($_GET['stock']) && $_GET['stock'] == 'in_stock') ? 'selected' : '' ?>>📦 En Stock</option>
+                <option value="out_of_stock" <?= (isset($_GET['stock']) && $_GET['stock'] == 'out_of_stock') ? 'selected' : '' ?>>⚠️ Agotado</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary px-6">Filtrar</button>
+            <a href="index.php?controller=Admin&action=products" class="btn btn-ghost btn-square" title="Limpiar">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </a>
+        </div>
+    </form>
+</div>
 
         <div class="bg-base-200 rounded-3xl shadow-xl overflow-hidden border border-base-100">
             <div class="overflow-x-auto">
@@ -203,6 +227,7 @@
     </main>
 </div>
 
+<!-- FORMULARIO -->
 <input type="checkbox" id="modal-producto" class="modal-toggle" />
 <div class="modal">
     <div class="modal-box bg-base-200 max-w-2xl">
