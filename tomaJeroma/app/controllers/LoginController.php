@@ -65,12 +65,7 @@ class LoginController
         View::render('Login', ['categories'=>$categories]);
     }
 
-    public function deleteUser()
-    {
-        $repo = new UserRepository;
-        $repo->deleteUserById($_POST['id']);
-        $this->index();
-    }
+
 
     public function logout()
     {
