@@ -67,31 +67,32 @@ class AdminController
         $fab = trim($_POST['fabricante'] ?? '');
         $stock = isset($_POST['stock']) ? intval($_POST['stock']) : -1;
 
-        // 2. Validación estricta
+        // Validación de seguridad
         if (empty($name) || empty($fab) || empty($desc) || $price <= 0 || $stock < 0 || !$cat) {
-            // Podrías guardar un mensaje de error en sesión aquí
-            header("Location: index.php?controller=Admin&action=products&error=campos_incompletos");
+            Session::set('error', "Por favor, rellena todos los campos correctamente.");
+            header("Location: index.php?controller=Admin&action=products");
             exit;
         }
 
         $repo = new ProductsRepository();
 
         if ($id) {
+
             $imgName = $this->handleImageUpload($id);
-            $repo->updateProduct($id, $name, $desc, $price, $cat, $fab, $stock, $imgName);
-            if ($imgName) {
-                    Session::set('error',"Producto editado con exito.");
-                    header("Location: index.php?controller=Admin&action=products");
-                    exit;
-                }else{
-                    Session::set('error',"Producto no editado.");
-                    header("Location: index.php?controller=Admin&action=products");
-                    exit;
-                }
+
+
+            $result = $repo->updateProduct($id, $name, $desc, $price, $cat, $fab, $stock, $imgName);
+
+            if ($result !== false) {
+                Session::set('error', "Producto actualizado con éxito.");
+            } else {
+                Session::set('error', "Error técnico al intentar actualizar.");
+            }
         } else {
-            // MODO NUEVO: Validar que la imagen sea obligatoria al crear
+
             if (!isset($_FILES['img']) || $_FILES['img']['error'] !== UPLOAD_ERR_OK) {
-                header("Location: index.php?controller=Admin&action=products&error=imagen_obligatoria");
+                Session::set('error', "La imagen es obligatoria para nuevos productos.");
+                header("Location: index.php?controller=Admin&action=products");
                 exit;
             }
 
@@ -99,18 +100,13 @@ class AdminController
             if ($newId) {
                 $imgName = $this->handleImageUpload($newId);
                 $repo->updateProduct($newId, $name, $desc, $price, $cat, $fab, $stock, $imgName);
-
-                if ($imgName) {
-                    Session::set('error',"Producto creado con exito.");
-                    header("Location: index.php?controller=Admin&action=products");
-                    exit;
-                }else{
-                    Session::set('error',"Producto no creado.");
-                    header("Location: index.php?controller=Admin&action=products");
-                    exit;
-                }
+                Session::set('error', "Producto creado con éxito.");
+            } else {
+                Session::set('error', "No se pudo crear el producto en la base de datos.");
             }
         }
+        header("Location: index.php?controller=Admin&action=products");
+        exit;
     }
 
     private function handleImageUpload($id)
@@ -128,23 +124,43 @@ class AdminController
             if (move_uploaded_file($fileTmpPath, $destPath)) {
                 return $destPath;
             }
-        }else{
-            Session::set('error',"Formato de la imagen incorrecto");
+        } else {
+            Session::set('error', "Formato de la imagen incorrecto");
             header("Location: index.php?controller=Admin&action=products");
             exit;
         }
-        
     }
 
     public function deleteProduct()
     {
         $id = $_GET['id'] ?? null;
-        if (!$id) {
-            Session::set('error',"Error al borrar el producto no se encontro.");
-            header("Location: index.php?controller=Admin&action=products");
-            exit;
+        if ($id) {
+            $repo = new ProductsRepository();
+            if ($repo->deleteProduct($id)) {
+                Session::set('error', "Producto desactivado correctamente.");
+            } else {
+                Session::set('error', "No se pudo desactivar el producto.");
+            }
         }
-        (new ProductsRepository())->deleteProduct($id);
         header("Location: index.php?controller=Admin&action=products");
+        exit;
+    }
+
+    public function filter()
+    {
+        $texto = $_GET['buscar'] ?? '';
+        $catId = $_GET['category'] ?? null;
+        $stock = $_GET['stock'] ?? null;
+
+        $repoProd = new ProductsRepository();
+        $repoCat = new CategoryRepository();
+
+        $productos = $repoProd->getProductsByAdvancedFilter($catId, $stock, $texto);
+        $categorias = $repoCat->getCategories();
+
+        View::render("dashboard/products_management", [
+            "productos" => $productos,
+            "categories" => $categorias
+        ]);
     }
 }

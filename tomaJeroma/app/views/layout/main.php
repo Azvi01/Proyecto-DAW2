@@ -66,13 +66,14 @@
             </div>
         </div>
         <!-- LOGIN -->
-        <div class="navbar py-2">
+        <div class="navbar py-2 flex justify-between ">
             <?php if (Session::get('UserToken')) {
                 $SesionMail = JWTToken::rescueMail(Session::get('UserToken'));
                 echo "<a href='index.php?controller=Login&action=logout'>$SesionMail</a>";
 
-                
+                if (JWTToken::rescueUserRole(Session::get('UserToken')) === "admin") {
                     echo "<a href='index.php?controller=Admin&action=index'>Dashboard</a>";
+                }
                 
             } else {
                 echo "<a href='index.php?controller=Login&action=index'>Login</a>";

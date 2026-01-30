@@ -218,7 +218,7 @@ INSERT INTO offers_products (offer_id, product_id) VALUES
 
 
 INSERT INTO users (hashed_pass, mail, telf, role) VALUES
-('$2y$10$9htbRiVfkx7qNDj7/2YPNevAqkC.tEllq9QqPrJotjfBNfGl68zzS', 'admin@miauguau.com', '600000001', 'admin'),
+('$2y$10$uYypazf21Rs3.HZ4WQNcp.NhT7yQnN9P7OG3VDwM.Qi35Txr6Pgxu', 'admin@miauguau.com', '600000001', 'admin'),
 ('$2y$10$JORKQfhWUl5qrRazvzvyB.x8FgWFnTqDko215MdAJnzf1XGtIJZE6', 'cliente1@miauguau.com', '600000002', 'user'),
 ('$2y$10$Goxw4o0TpfMEv6ADPic3Zem9wbUotjD7nbT3aIB/mMxdI2GBm4tR2', 'cliente2@miauguau.com', '600000003', 'user');
 

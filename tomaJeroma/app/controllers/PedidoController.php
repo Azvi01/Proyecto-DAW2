@@ -32,7 +32,9 @@ class PedidoController
 
             if ($res) {
                 Session::delete('Carrito');
+                Session::set("error", "Compra realizada con exito.");
                 header("Location: index.php");
+                exit;
             }
         } catch (Exception $e) {
             Session::set("error", $e->getMessage());
