@@ -41,12 +41,7 @@
 
     <main class="flex-1 p-8 lg:p-12 overflow-y-auto">
         <div class="flex justify-between items-center mb-10">
-            <h2 class="text-3xl font-black tracking-tight">Panel de Administración</h2>
-            <div class="avatar placeholder">
-                <div class="bg-neutral text-neutral-content rounded-full w-12 border-2 border-primary">
-                    <span>AD</span>
-                </div>
-            </div>
+            <h2 class="text-3xl font-black tracking-tight">Panel de Administración</h2>s
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">

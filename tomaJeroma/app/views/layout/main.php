@@ -71,9 +71,9 @@
                 $SesionMail = JWTToken::rescueMail(Session::get('UserToken'));
                 echo "<a href='index.php?controller=Login&action=logout'>$SesionMail</a>";
 
-                
-                echo "<br>";
-                echo "<a href='index.php?controller=Admin&action=index'>Dashboard</a>";
+                if (JWTToken::rescueUserRole(Session::get('UserToken')) === "admin") {
+                    echo "<a href='index.php?controller=Admin&action=index'>Dashboard</a>";
+                }
                 
             } else {
                 echo "<a href='index.php?controller=Login&action=index'>Login</a>";
