@@ -34,6 +34,7 @@
 
     <!--HEADER MENU -->
     <header class="navbar bg-base-300 shadow-sm px-4 sticky top-0 z-100">
+        <!--MENU-->
         <div class="navbar-start gap-2">
             <div class="drawer w-auto">
                 <input id="my-drawer-1" type="checkbox" class="drawer-toggle" />
@@ -44,7 +45,7 @@
                         </svg>
                     </label>
                 </div>
-
+                <!--LOGIN-->
                 <div class="drawer-side z-1000">
                     <label for="my-drawer-1" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu bg-base-200 min-h-full w-80 p-4 text-xl gap-4">
@@ -95,6 +96,7 @@
             </a>
         </div>
 
+        <!--BUSCADOR-->
         <div class="navbar-center hidden lg:flex">
             <form action="index.php?controller=Products&action=search" method="post" class="join">
                 <input class="input input-bordered join-item w-64" type="text" placeholder="Buscar..." name="buscar" />
@@ -106,6 +108,7 @@
             </form>
         </div>
 
+        <!--PARTE DERECHA-->
         <div class="navbar-end gap-1">
             <div class="lg:hidden">
                 <a href="index.php?controller=Login&action=index" class="btn btn-ghost btn-circle">
@@ -114,7 +117,7 @@
                     </svg>
                 </a>
             </div>
-
+            <!--LOGIN-->
             <div class="hidden lg:flex mr-2">
                 <?php if (Session::get('UserToken')):
                     $SesionMail = JWTToken::rescueMail(Session::get('UserToken')); ?>
@@ -131,7 +134,8 @@
                     <a href="index.php?controller=Login&action=index" class="btn btn-ghost btn-sm">Login</a>
                 <?php endif; ?>
             </div>
-                    
+
+            <!--MODO OSCURO/CLARO-->
             <label class="swap swap-rotate btn btn-ghost btn-circle">
                 <input type="checkbox" class="theme-controller" value="dark" />
                 <svg class="swap-off h-5 w-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -142,6 +146,7 @@
                 </svg>
             </label>
 
+            <!--CARRITO-->
             <a href="index.php?controller=cart&action=chekLogin" class="btn btn-ghost btn-circle">
                 <div class="indicator">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="w-6 h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -154,13 +159,15 @@
             </a>
         </div>
     </header>
-
+    
+    <!--CONTENT-->
     <div class="flex flex-col gap-3 h-dvh overflow-scroll">
+        <!--MAIN-->
         <main class="flex-1 block">
             <?= $content ?>
         </main>
 
-
+        <!--FOOTER-->
         <footer>
             <footer class="footer footer-horizontal footer-center bg-base-300 text-base-content rounded p-10">
                 <nav class="grid grid-flow-col gap-4">
