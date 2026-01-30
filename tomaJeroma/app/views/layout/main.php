@@ -66,7 +66,7 @@
             </div>
         </div>
         <!-- LOGIN -->
-        <div class="navbar py-2">
+        <div class="navbar py-2 flex justify-between ">
             <?php if (Session::get('UserToken')) {
                 $SesionMail = JWTToken::rescueMail(Session::get('UserToken'));
                 echo "<a href='index.php?controller=Login&action=logout'>$SesionMail</a>";
