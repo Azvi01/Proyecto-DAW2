@@ -67,4 +67,36 @@ class UserRepository extends Model
             return [];
         }
     }
+
+    public function getAllUsers($role = null, $email = null) {
+    $sql = "SELECT id, mail, role FROM users WHERE 1=1";
+    $params = [];
+
+    if (!empty($role)) {
+        $sql .= " AND role = ?";
+        $params[] = $role;
+    }
+    if (!empty($email)) {
+        $sql .= " AND mail LIKE ?";
+        $params[] = "%$email%";
+    }
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+public function updateUser($id, $email, $role, $password = null) {
+    if ($password) {
+        $sql = "UPDATE users SET mail = ?, role = ?, hashed_pass = ? WHERE id = ?";
+        $hashed = password_hash($password, PASSWORD_BCRYPT);
+        return $this->db->prepare($sql)->execute([$email, $role, $hashed, $id]);
+    }
+    $sql = "UPDATE users SET mail = ?, role = ? WHERE id = ?";
+    return $this->db->prepare($sql)->execute([$email, $role, $id]);
+}
+
+public function deleteUser($id) {
+    return $this->db->prepare("DELETE FROM users WHERE id = ?")->execute([$id]);
+}
 }
