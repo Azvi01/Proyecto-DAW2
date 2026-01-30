@@ -66,13 +66,14 @@
             </div>
         </div>
         <!-- LOGIN -->
-        <div class="navbar py-2">
+        <div class="navbar py-2 flex justify-between ">
             <?php if (Session::get('UserToken')) {
                 $SesionMail = JWTToken::rescueMail(Session::get('UserToken'));
                 echo "<a href='index.php?controller=Login&action=logout'>$SesionMail</a>";
 
                 
-                    echo "<a href='index.php?controller=Admin&action=index'>Dashboard</a>";
+                echo "<br>";
+                echo "<a href='index.php?controller=Admin&action=index'>Dashboard</a>";
                 
             } else {
                 echo "<a href='index.php?controller=Login&action=index'>Login</a>";
@@ -85,7 +86,7 @@
             </a>
         </div>
         <!--HEADER  BUSQUEDA Y CARRITO -->
-        <div class="navbar-center ">
+        <div class="navbar-center  ">
             <!--HEADER BUSQUEDA -->
             <button class="btn btn-ghost btn-circle">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
