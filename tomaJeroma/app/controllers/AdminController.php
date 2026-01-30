@@ -2,6 +2,9 @@
 require_once '../app/models/AdminRepository.php';
 require_once('../app/models/ProductsRepository.php');
 require_once '../app/models/CategoryRepository.php';
+require_once '../app/models/PedidoRepository.php';
+require_once '../app/models/UserRepository.php';
+require_once '../app/controllers/SanitizedController.php';
 
 
 class AdminController
@@ -9,23 +12,31 @@ class AdminController
 
     public function index()
     {
-
-        // if (JWTToken::rescueUserRole(Session::get('UserToken')) !== 'admin') { header('Location: index.php'); }
+        if (JWTToken::rescueUserRole(Session::get('UserToken')) !== 'admin') {
+            header('Location: index.php');
+        }
 
         $repo = new AdminRepository();
+        $repoCat = new CategoryRepository();
+        $categorias = $repoCat->getCategories();
 
         $data = [
             'ventasTotales' => $repo->getTotalSales(),
             'totalPedidos' => $repo->getTotalOrders(),
-            'pedidosRecientes' => $repo->getRecentOrders()
+            'pedidosRecientes' => $repo->getRecentOrders(),
+
         ];
 
 
-        View::render('dashboard', ["data" => $data]);
+        View::render('dashboard', ["data" => $data, "categories" => $categorias]);
     }
 
     public function products()
     {
+        if (JWTToken::rescueUserRole(Session::get('UserToken')) !== 'admin') {
+            header('Location: index.php');
+        }
+
         $repoProd = new ProductsRepository();
         $repoCat = new CategoryRepository();
 
@@ -36,6 +47,34 @@ class AdminController
             "productos" => $productos,
             "categories" => $categorias
         ]);
+    }
+
+    public function orders()
+    {
+        $clientId = $_GET['clientId'] ?? null;
+        $repo = new PedidosRepository();
+        $repoCat = new CategoryRepository();
+        $categorias = $repoCat->getCategories();
+
+        // Obtenemos los pedidos (si hay ID de cliente, vendrán filtrados)
+        $orders = $repo->getAllOrdersWithUser($clientId);
+
+        View::render("dashboard/orders_management", [
+            "orders" => $orders,
+            "searchId" => $clientId,
+            "categories" => $categorias
+        ]);
+    }
+
+    public function users()
+    {
+        $role = $_GET['role'] ?? null;
+        $email = $_GET['email'] ?? null;
+        $repo = new UserRepository();
+        $repoCat = new CategoryRepository();
+        $categorias = $repoCat->getCategories();
+        $users = $repo->getAllUsers($role, $email);
+        View::render("dashboard/users_management", ["users" => $users, "categories" => $categorias]);
     }
 
     public function search()
@@ -67,7 +106,6 @@ class AdminController
         $fab = trim($_POST['fabricante'] ?? '');
         $stock = isset($_POST['stock']) ? intval($_POST['stock']) : -1;
 
-        // Validación de seguridad
         if (empty($name) || empty($fab) || empty($desc) || $price <= 0 || $stock < 0 || !$cat) {
             Session::set('error', "Por favor, rellena todos los campos correctamente.");
             header("Location: index.php?controller=Admin&action=products");
@@ -162,5 +200,50 @@ class AdminController
             "productos" => $productos,
             "categories" => $categorias
         ]);
+    }
+
+
+
+    public function saveUser()
+    {
+        $id = $_POST['id'];
+        $email = $_POST['email'];
+        $role = $_POST['role'];
+        $pass = !empty($_POST['password']) ? $_POST['password'] : null;
+        $repo = new UserRepository();
+
+        if ($pass !== null) {
+            if (validarPass($pass)) {
+                if ($repo->updateUser($id, $email, $role, $pass)) {
+                    Session::set('error', "Usuario actualizado con éxito.");
+                }
+            } else {
+                Session::set('error', "Contraseña no valida.");
+            }
+        } else {
+            if ($repo->updateUser($id, $email, $role, $pass)) {
+                Session::set('error', "Usuario actualizado con éxito.");
+            }
+        }
+
+        header("Location: index.php?controller=Admin&action=users");
+        exit;
+    }
+
+    public function deleteUser()
+    {
+        try {
+            $id = $_GET['id'];
+        $repo = new UserRepository();
+        if ($repo->deleteUser($id)) {
+            Session::set('error', "Usuario eliminado definitivamente.");
+        }
+        header("Location: index.php?controller=Admin&action=users");
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            Session::set('error', "No se puede eliminar, este user me da de comer");
+            header("Location: index.php?controller=Admin&action=users");
+            exit;
+        }
     }
 }
