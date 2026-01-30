@@ -33,111 +33,125 @@
     <?php endif; ?>
 
     <!--HEADER MENU -->
-    <header class="navbar bg-base-300 shadow-sm">
-        <div class="lg:navbar-start">
-            <div class="drawer">
+    <header class="navbar bg-base-300 shadow-sm px-4 sticky top-0 z-100">
+        <div class="navbar-start gap-2">
+            <div class="drawer w-auto">
                 <input id="my-drawer-1" type="checkbox" class="drawer-toggle" />
                 <div class="drawer-content">
-                    <label for="my-drawer-1" class="drawer-button">
-                        <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
-                            </svg>
-                        </div>
+                    <label for="my-drawer-1" class="btn btn-ghost btn-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                        </svg>
                     </label>
                 </div>
-                <div class="drawer-side">
+
+                <div class="drawer-side z-1000">
                     <label for="my-drawer-1" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul class="menu bg-base-200 min-h-full w-80 p-4 text-2xl flex gap-5">
+                    <ul class="menu bg-base-200 min-h-full w-80 p-4 text-xl gap-4">
+                        <li class="lg:hidden bg-base-300 rounded-box p-2">
+                            <?php if (Session::get('UserToken')):
+                                $SesionMail = JWTToken::rescueMail(Session::get('UserToken')); ?>
+                                <div class="flex flex-col items-start gap-3">
+                                    <div class="flex items-center gap-2 px-2">
+                                        <div class="avatar placeholder">
+                                            <div class="bg-primary text-primary-content rounded-full w-8">
+                                                <span><?= strtoupper($SesionMail[0]) ?></span>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm font-bold truncate w-40"><?= $SesionMail ?></span>
+                                    </div>
+                                    <div class="flex flex-col w-full gap-2">
+                                        <?php if (JWTToken::rescueUserRole(Session::get('UserToken')) === "admin"): ?>
+                                            <a href="index.php?controller=Admin&action=index" class="btn btn-primary btn-sm w-full">Panel Admin</a>
+                                        <?php endif; ?>
+                                        <a href="index.php?controller=Login&action=logout" class="btn btn-error btn-outline btn-sm w-full">Cerrar Sesión</a>
+                                    </div>
+                                </div>
+                            <?php else: ?>
+                                <a href="index.php?controller=Login&action=index" class="btn btn-primary w-full text-white">Iniciar Sesión</a>
+                            <?php endif; ?>
+                        </li>
+
+                        <li class="menu-title opacity-50 uppercase text-xs tracking-widest">Navegación</li>
                         <li><a href="index.php?controller=Products">Inicio</a></li>
                         <li>
-                            <a href="#">Categorias</a>
-                            <ul class="menu">
-                                <?php if ($categories): ?>
-                                    <?php foreach ($categories as $category) : ?>
-                                        <li><a href="index.php?controller=Products&action=showProductCategory&categoryId=<?= $category->getId(); ?>"><?= $category->getName(); ?></a></li>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </ul>
+                            <details open>
+                                <summary>Categorías</summary>
+                                <ul>
+                                    <?php if ($categories): foreach ($categories as $category): ?>
+                                            <li><a href="index.php?controller=Products&action=showProductCategory&categoryId=<?= $category->getId(); ?>"><?= $category->getName(); ?></a></li>
+                                    <?php endforeach;
+                                    endif; ?>
+                                </ul>
+                            </details>
                         </li>
                         <li><a href="index.php?controller=Products&action=showProductOffer">Ofertas</a></li>
                     </ul>
                 </div>
             </div>
-        </div>
-        <!-- LOGIN -->
-        <div class="navbar py-2 flex justify-between ">
-            <?php if (Session::get('UserToken')) {
-                $SesionMail = JWTToken::rescueMail(Session::get('UserToken'));
-                echo "<a href='index.php?controller=Login&action=logout'>$SesionMail</a>";
 
-                if (JWTToken::rescueUserRole(Session::get('UserToken')) === "admin") {
-                    echo "<a href='index.php?controller=Admin&action=index'>Dashboard</a>";
-                }
-                
-            } else {
-                echo "<a href='index.php?controller=Login&action=index'>Login</a>";
-            } ?>
-        </div>
-        <!--HEADER lOGO -->
-        <div class="navbar py-2">
-            <a href="index.php?controller=Products">
-                <img class="w-25 h-15 " src="./img/logo-sin-fondo.png" />
+            <a href="index.php?controller=Products" class="shrink-0">
+                <img class="h-8 md:h-12 w-auto" src="./img/logo-sin-fondo.png" alt="Logo" />
             </a>
         </div>
-        <!--HEADER  BUSQUEDA Y CARRITO -->
-        <div class="navbar-center ">
-            <!--HEADER BUSQUEDA -->
-            <button class="btn btn-ghost btn-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-            </button>
-            <form action="index.php?controller=Products&action=search" method="post">
-                <input class="input" type="text" placeholder="buscar producto" name="buscar" />
+
+        <div class="navbar-center hidden lg:flex">
+            <form action="index.php?controller=Products&action=search" method="post" class="join">
+                <input class="input input-bordered join-item w-64" type="text" placeholder="Buscar..." name="buscar" />
+                <button class="btn btn-primary join-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
             </form>
-            <!--HEADER CARRITO -->
-            <button class="btn btn-ghost btn-circle">
-                <div class="indicator">
-                    <a href="index.php?controller=cart&action=chekLogin">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="w-5 h-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="9" cy="21" r="1" />
-                            <circle cx="20" cy="21" r="1" />
-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                        </svg>
-                        <span class="badge badge-xs badge-primary indicator-item"><?php
-                            $carrito = Session::get("Carrito") ?? [];
-                            if (count($carrito) > 9) {
-                                echo "+9";
-                            } else {
-                                echo count($carrito);
-                            }
-                            ?>
-                        </span>
-                    </a>
-                </div>
-            </button>
-            <!-- BOTON COLOR-->
-            <label class="swap swap-rotate">
-                <!-- this hidden checkbox controls the state -->
+        </div>
+
+        <div class="navbar-end gap-1">
+            <div class="lg:hidden">
+                <a href="index.php?controller=Login&action=index" class="btn btn-ghost btn-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                </a>
+            </div>
+
+            <div class="hidden lg:flex mr-2">
+                <?php if (Session::get('UserToken')):
+                    $SesionMail = JWTToken::rescueMail(Session::get('UserToken')); ?>
+                    <div class="dropdown dropdown-end">
+                        <label tabindex="0" class="btn btn-ghost btn-sm lowercase font-normal"><?= explode('@', $SesionMail)[0] ?></label>
+                        <ul tabindex="0" class="dropdown-content z-100 menu p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                            <?php if (JWTToken::rescueUserRole(Session::get('UserToken')) === "admin"): ?>
+                                <li><a href="index.php?controller=Admin&action=index" class="text-primary font-bold">Admin Panel</a></li>
+                            <?php endif; ?>
+                            <li><a href="index.php?controller=Login&action=logout" class="text-error">Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                <?php else: ?>
+                    <a href="index.php?controller=Login&action=index" class="btn btn-ghost btn-sm">Login</a>
+                <?php endif; ?>
+            </div>
+                    
+            <label class="swap swap-rotate btn btn-ghost btn-circle">
                 <input type="checkbox" class="theme-controller" value="dark" />
-                <!-- sun icon -->
-                <svg
-                    class="swap-off h-6 w-6 fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24">
-                    <path
-                        d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
+                <svg class="swap-off h-5 w-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
                 </svg>
-                <!-- moon icon -->
-                <svg
-                    class="swap-on h-6 w-6 fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24">
-                    <path
-                        d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
+                <svg class="swap-on h-5 w-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
                 </svg>
             </label>
+
+            <a href="index.php?controller=cart&action=chekLogin" class="btn btn-ghost btn-circle">
+                <div class="indicator">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="w-6 h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                    </svg>
+                    <span class="badge badge-sm badge-primary indicator-item"><?= count(Session::get("Carrito") ?? []) ?></span>
+                </div>
+            </a>
         </div>
     </header>
 
