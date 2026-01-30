@@ -12,8 +12,14 @@ class AdminController
 
     public function index()
     {
+        if (!Session::get('UserToken')) {
+            header('Location: index.php');
+            exit;
+        }
+
         if (JWTToken::rescueUserRole(Session::get('UserToken')) !== 'admin') {
             header('Location: index.php');
+            exit;
         }
 
         $repo = new AdminRepository();
@@ -33,9 +39,18 @@ class AdminController
 
     public function products()
     {
+
+        if (!Session::get('UserToken')) {
+            header('Location: index.php');
+            exit;
+        }
+
         if (JWTToken::rescueUserRole(Session::get('UserToken')) !== 'admin') {
             header('Location: index.php');
+            exit;
         }
+
+
 
         $repoProd = new ProductsRepository();
         $repoCat = new CategoryRepository();
@@ -51,12 +66,21 @@ class AdminController
 
     public function orders()
     {
+        if (!Session::get('UserToken')) {
+            header('Location: index.php');
+            exit;
+        }
+
+        if (JWTToken::rescueUserRole(Session::get('UserToken')) !== 'admin') {
+            header('Location: index.php');
+            exit;
+        }
         $clientId = $_GET['clientId'] ?? null;
         $repo = new PedidosRepository();
         $repoCat = new CategoryRepository();
         $categorias = $repoCat->getCategories();
 
-        // Obtenemos los pedidos (si hay ID de cliente, vendrán filtrados)
+        
         $orders = $repo->getAllOrdersWithUser($clientId);
 
         View::render("dashboard/orders_management", [
@@ -68,6 +92,15 @@ class AdminController
 
     public function users()
     {
+        if (!Session::get('UserToken')) {
+            header('Location: index.php');
+            exit;
+        }
+
+        if (JWTToken::rescueUserRole(Session::get('UserToken')) !== 'admin') {
+            header('Location: index.php');
+            exit;
+        }
         $role = $_GET['role'] ?? null;
         $email = $_GET['email'] ?? null;
         $repo = new UserRepository();
@@ -234,11 +267,11 @@ class AdminController
     {
         try {
             $id = $_GET['id'];
-        $repo = new UserRepository();
-        if ($repo->deleteUser($id)) {
-            Session::set('error', "Usuario eliminado definitivamente.");
-        }
-        header("Location: index.php?controller=Admin&action=users");
+            $repo = new UserRepository();
+            if ($repo->deleteUser($id)) {
+                Session::set('error', "Usuario eliminado definitivamente.");
+            }
+            header("Location: index.php?controller=Admin&action=users");
         } catch (PDOException $e) {
             error_log($e->getMessage());
             Session::set('error', "No se puede eliminar, este user me da de comer");
