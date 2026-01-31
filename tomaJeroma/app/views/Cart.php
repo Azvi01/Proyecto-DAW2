@@ -87,15 +87,69 @@
                     </div>
 
                     <div class="card-actions mt-6">
-                        <form action="index.php?controller=Pedido&action=checkout" method="POST" class="w-full">
-                            <button type="submit" class="btn btn-primary btn-block text-lg">
-                                Realizar Pedido
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                            </button>
-                        </form>
+    <button type="button" onclick="checkoutModal.showModal()" class="btn btn-primary btn-block text-lg">
+        Realizar Pedido
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+    </button>
+</div>
+
+<dialog id="checkoutModal" class="modal">
+    <div class="modal-box w-11/12 max-w-3xl">
+        <h3 class="font-bold text-lg mb-4">Finalizar Compra</h3>
+        
+        <form action="index.php?controller=Pedido&action=checkout" method="POST">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <div class="bg-base-200 p-4 rounded-lg">
+                    <h4 class="font-semibold mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
+                        Dirección de Envío
+                    </h4>
+                    <div class="form-control w-full mb-2">
+                        <label class="label"><span class="label-text">Dirección</span></label>
+                        <input type="text" name="direccion" placeholder="Calle, número, piso..." class="input input-bordered w-full" required />
                     </div>
+                    <div class="form-control w-full mb-2">
+                        <label class="label"><span class="label-text">Ciudad</span></label>
+                        <input type="text" name="ciudad" placeholder="Ciudad" class="input input-bordered w-full" required />
+                    </div>
+                </div>
+
+                <div class="bg-base-200 p-4 rounded-lg">
+                    <h4 class="font-semibold mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" /><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd" /></svg>
+                        Datos de Pago
+                    </h4>
+                    <div class="form-control w-full mb-2">
+                        <label class="label"><span class="label-text">Número de Tarjeta</span></label>
+                        <input type="text" name="tarjeta_num" placeholder="0000 0000 0000 0000" class="input input-bordered w-full" required />
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="form-control w-1/2">
+                            <label class="label"><span class="label-text">Caducidad</span></label>
+                            <input type="text" name="tarjeta_cad" placeholder="MM/AA" class="input input-bordered w-full" required />
+                        </div>
+                        <div class="form-control w-1/2">
+                            <label class="label"><span class="label-text">CVV</span></label>
+                            <input type="text" name="tarjeta_cvv" placeholder="123" class="input input-bordered w-full" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-action mt-6">
+                <button type="button" class="btn" onclick="checkoutModal.close()">Cancelar</button>
+                
+                <button type="submit" class="btn btn-primary">
+                    Confirmar y Pagar
+                </button>
+            </div>
+        </form>
+    </div>
+</dialog>
                     
                     <div class="mt-4 text-center">
                         <a href="index.php" class="link link-hover text-sm opacity-70 italic">Continuar comprando</a>
