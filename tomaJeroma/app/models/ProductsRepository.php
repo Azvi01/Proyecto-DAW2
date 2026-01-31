@@ -181,7 +181,7 @@ class ProductsRepository extends Model
                     ON op.offer_id = o.id
                 LEFT JOIN category c
                     ON p.category_id = c.id
-                WHERE p.name LIKE :filter ;
+                WHERE p.name LIKE :filter and p.active = 1;
             ";
 
         try {
